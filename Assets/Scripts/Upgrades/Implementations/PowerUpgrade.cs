@@ -4,12 +4,12 @@ using Zenject;
 
 namespace Sample.Implementations
 {
-    public class SpeedUpgrade : Upgrade
+    public class PowerUpgrade:Upgrade
     {
-        private readonly SpeedUpgradeConfig _config;
+        private readonly PowerUpgradeConfig _config;
         private PlayerStats _stats;
 
-        public SpeedUpgrade(SpeedUpgradeConfig config) : base(config)
+        public PowerUpgrade(PowerUpgradeConfig config) : base(config)
         {
             _config = config;
         }
@@ -24,8 +24,8 @@ namespace Sample.Implementations
         protected override void LevelUp(int lvl)
         {
             Debug.Log("Не инжектится в 18 строке");
-            //var speed = _stats.GetStat("speed") + 1;
-            //_stats.SetStat("speed", speed);
+            //var power = _stats.GetStat("power") + 1;
+            //_stats.SetStat("power", power);
         }
     }
 }

@@ -9,6 +9,9 @@ namespace Sample
         public event Action<int> OnLevelUp;
 
         [ShowInInspector, ReadOnly]
+        public string[] dependencies => _config.dependencies;
+        
+        [ShowInInspector, ReadOnly]
         public string id => _config.id;
 
         [ShowInInspector, ReadOnly]

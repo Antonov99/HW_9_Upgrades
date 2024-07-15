@@ -8,21 +8,42 @@ using Zenject;
 
 namespace Sample
 {
-    [Serializable]
-    public sealed class UpgradesManager
+    public sealed class UpgradesManager : MonoBehaviour
     {
         public event Action<Upgrade> OnLevelUp;
-        
+
         [ReadOnly, ShowInInspector]
         private Dictionary<string, Upgrade> _upgrades = new();
 
         private MoneyStorage _moneyStorage;
 
+        [SerializeField]
+        private UpgradeCatalog configs;
+
+        private PlayerStats _stats;
+
+        private void Awake()
+        {
+            var upgradeConfigs = configs.GetAllUpgrades();
+            var upgrades = new Upgrade[upgradeConfigs.Length];
+            for (int i = 0; i < upgrades.Length; i++)
+            {
+                upgrades[i]=upgradeConfigs[i].InstantiateUpgrade();
+            }
+            Setup(upgrades);
+        }
+
         [Inject]
-        public void Construct(MoneyStorage moneyStorage)
+        public void Construct(MoneyStorage moneyStorage, PlayerStats playerStats)
         {
             _moneyStorage = moneyStorage;
-            Debug.Log("Inject");
+            _stats = playerStats;
+        }
+
+        [Button]
+        public void AddStat(string statName, int value)
+        {
+            _stats.AddStat(statName, value);
         }
 
         public void Setup(Upgrade[] upgrades)
@@ -45,18 +66,25 @@ namespace Sample
             return _upgrades.Values.ToArray();
         }
 
-        public bool CanLevelUp(Upgrade upgrade)
+        private bool CanLevelUp(Upgrade upgrade)
         {
             if (upgrade.isMaxLevel)
             {
                 return false;
             }
 
+            var dependencies = upgrade.dependencies;
+            foreach (var dependency in dependencies)
+            {
+                if (GetUpgrade(dependency).level <= upgrade.level)
+                    return false;
+            }
+
             var price = upgrade.nextPrice;
             return _moneyStorage.CanSpendMoney(price);
         }
 
-        public void LevelUp(Upgrade upgrade)
+        private void LevelUp(Upgrade upgrade)
         {
             if (!CanLevelUp(upgrade))
             {

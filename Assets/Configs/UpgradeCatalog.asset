@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: UpgradeCatalog
   m_EditorClassIdentifier: 
   configs:
-  - {fileID: 11400000, guid: 0885570d230cb5242a23070be58fee68, type: 2}
+  - {fileID: 11400000, guid: d361cb2b797322f44a2464b09c86352c, type: 2}
+  - {fileID: 11400000, guid: 536dcc214c863234a8073f874fdea879, type: 2}

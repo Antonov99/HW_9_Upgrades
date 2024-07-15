@@ -10,10 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 90e052219c1e4d18822a4dd8c9e80321, type: 3}
-  m_Name: Speed
+  m_Name: SpeedUpgrade
   m_EditorClassIdentifier: 
+  dependencies: []
   id: speed
-  maxLevel: 5
+  maxLevel: 20
   priceTable:
-    basePrice: 17
-    levels: 0000000022000000330000004400000055000000
+    basePrice: 22
+    levels: 000000002c00000042000000580000006e000000840000009a000000b0000000c6000000dc000000f2000000080100001e010000340100004a01000060010000760100008c010000a2010000b8010000

@@ -9,6 +9,9 @@ namespace Sample
         private const float _SPACE_HEIGHT = 10.0f;
 
         [SerializeField]
+        public string[] dependencies;
+        
+        [SerializeField]
         public string id;
         
         [Range(2, 99)]
