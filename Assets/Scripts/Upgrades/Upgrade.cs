@@ -9,50 +9,50 @@ namespace Sample
         public event Action<int> OnLevelUp;
 
         [ShowInInspector, ReadOnly]
-        public string Id => this.config.id;
+        public string id => _config.id;
 
         [ShowInInspector, ReadOnly]
-        public int Level => this.currentLevel;
+        public int level => _currentLevel;
 
         [ShowInInspector, ReadOnly]
-        public int MaxLevel => this.config.maxLevel;
+        public int maxLevel => _config.maxLevel;
 
-        public bool IsMaxLevel => this.currentLevel == this.config.maxLevel;
-
-        [ShowInInspector, ReadOnly]
-        public float Progress => (float) this.currentLevel / this.config.maxLevel;
+        public bool isMaxLevel => _currentLevel == _config.maxLevel;
 
         [ShowInInspector, ReadOnly]
-        public int NextPrice => this.config.GetPrice(this.Level + 1);
+        public float progress => (float) _currentLevel / _config.maxLevel;
 
-        private readonly UpgradeConfig config;
+        [ShowInInspector, ReadOnly]
+        public int nextPrice => _config.GetPrice(level + 1);
 
-        private int currentLevel;
+        private readonly UpgradeConfig _config;
+
+        private int _currentLevel;
 
         protected Upgrade(UpgradeConfig config)
         {
-            this.config = config;
-            this.currentLevel = 1;
+            _config = config;
+            _currentLevel = 1;
         }
 
-        public void SetupLevel(int level)
+        public void SetupLevel(int lvl)
         {
-            this.currentLevel = level;
+            _currentLevel = lvl;
         }
 
         public void LevelUp()
         {
-            if (this.Level >= this.MaxLevel)
+            if (level >= maxLevel)
             {
-                throw new Exception($"Can not increment level for upgrade {this.config.id}!");
+                throw new Exception($"Can not increment level for upgrade {_config.id}!");
             }
 
-            var nextLevel = this.Level + 1;
-            this.currentLevel = nextLevel;
-            this.LevelUp(nextLevel);
-            this.OnLevelUp?.Invoke(nextLevel);
+            var nextLevel = level + 1;
+            _currentLevel = nextLevel;
+            LevelUp(nextLevel);
+            OnLevelUp?.Invoke(nextLevel);
         }
 
-        protected abstract void LevelUp(int level);
+        protected abstract void LevelUp(int lvl);
     }
 }
