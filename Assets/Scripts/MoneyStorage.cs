@@ -3,6 +3,7 @@ using Sirenix.OdinInspector;
 
 namespace Default
 {
+    [Serializable]
     public sealed class MoneyStorage
     {
         public event Action<int> OnMoneyChanged;

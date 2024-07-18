@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40d44f98bc8d4c9c9d0f6be08b39c8e7, type: 3}
   m_Name: PowerUpgrade
   m_EditorClassIdentifier: 
-  dependencies:
-  - speed
+  dependencies: []
   id: power
   maxLevel: 40
   priceTable:

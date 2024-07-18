@@ -22,7 +22,7 @@ namespace Sample
         [SerializeField]
         private PriceTable priceTable;
 
-        public abstract Upgrade InstantiateUpgrade();
+        public abstract Upgrade InstantiateUpgrade(PlayerStats stats);
 
         private void OnValidate()
         {

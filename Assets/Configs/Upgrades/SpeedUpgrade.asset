@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90e052219c1e4d18822a4dd8c9e80321, type: 3}
   m_Name: SpeedUpgrade
   m_EditorClassIdentifier: 
-  dependencies: []
+  dependencies:
+  - power
   id: speed
   maxLevel: 20
   priceTable:

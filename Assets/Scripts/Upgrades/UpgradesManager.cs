@@ -15,7 +15,8 @@ namespace Sample
         [ReadOnly, ShowInInspector]
         private Dictionary<string, Upgrade> _upgrades = new();
 
-        private MoneyStorage _moneyStorage;
+        [SerializeField]
+        private MoneyStorage moneyStorage;
 
         [SerializeField]
         private UpgradeCatalog configs;
@@ -28,15 +29,15 @@ namespace Sample
             var upgrades = new Upgrade[upgradeConfigs.Length];
             for (int i = 0; i < upgrades.Length; i++)
             {
-                upgrades[i]=upgradeConfigs[i].InstantiateUpgrade();
+                upgrades[i]=upgradeConfigs[i].InstantiateUpgrade(_stats);
             }
             Setup(upgrades);
         }
 
         [Inject]
-        public void Construct(MoneyStorage moneyStorage, PlayerStats playerStats)
+        public void Construct(MoneyStorage moneyStore, PlayerStats playerStats)
         {
-            _moneyStorage = moneyStorage;
+            moneyStorage = moneyStore;
             _stats = playerStats;
         }
 
@@ -46,7 +47,7 @@ namespace Sample
             _stats.AddStat(statName, value);
         }
 
-        public void Setup(Upgrade[] upgrades)
+        private void Setup(Upgrade[] upgrades)
         {
             _upgrades = new Dictionary<string, Upgrade>();
             for (int i = 0, count = upgrades.Length; i < count; i++)
@@ -56,7 +57,7 @@ namespace Sample
             }
         }
 
-        public Upgrade GetUpgrade(string id)
+        private Upgrade GetUpgrade(string id)
         {
             return _upgrades[id];
         }
@@ -81,7 +82,7 @@ namespace Sample
             }
 
             var price = upgrade.nextPrice;
-            return _moneyStorage.CanSpendMoney(price);
+            return moneyStorage.CanSpendMoney(price);
         }
 
         private void LevelUp(Upgrade upgrade)
@@ -92,7 +93,7 @@ namespace Sample
             }
 
             var price = upgrade.nextPrice;
-            _moneyStorage.SpendMoney(price);
+            moneyStorage.SpendMoney(price);
 
             upgrade.LevelUp();
             OnLevelUp?.Invoke(upgrade);

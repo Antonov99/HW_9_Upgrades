@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Default;
+using UnityEngine;
 
 namespace Sample.Implementations
 {
@@ -8,9 +9,9 @@ namespace Sample.Implementations
     )]
     public class SpeedUpgradeConfig:UpgradeConfig
     {
-        public override Upgrade InstantiateUpgrade()
+        public override Upgrade InstantiateUpgrade(PlayerStats stats)
         {
-            return new SpeedUpgrade(this);
+            return new SpeedUpgrade(this, stats);
         }
     }
 }
